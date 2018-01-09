@@ -35,13 +35,13 @@ function setLED() {
 		"5") LED $LED_5; led_CURRENT=$LED_5 ;;
 		"6") LED $LED_6; led_CURRENT=$LED_6 ;;
 		"7") LED $LED_7; led_CURRENT=$LED_7 ;;
-		*) echo "Failure." > $fs_PAYLOAD/log.txt;;
+		*) echo "Failure." >> $fs_PAYLOAD/log.txt;;
 	esac
-	echo "Changed to $1: $led_CURRENT" > $fs_PAYLOAD/log.txt
+	echo "Changed to $1: $led_CURRENT" >> $fs_PAYLOAD/log.txt
 }
 
 function launch() {
-	echo "Launching payload $1" > $fs_PAYLOAD/log.txt
+	echo "Launching payload $1" >> $fs_PAYLOAD/log.txt
 	LED $led_CURRENT 500
 	case "$1" in
 		"1") source "$fs_PAYLOAD/1\.sh" ;;
@@ -51,7 +51,7 @@ function launch() {
 		"5") source "$fs_PAYLOAD/5\.sh" ;;
 		"6") source "$fs_PAYLOAD/6\.sh" ;;
 		"7") source "$fs_PAYLOAD/7\.sh" ;;
-		*) echo "Failure." > $fs_PAYLOAD/log.txt;;
+		*) echo "Failure." >> $fs_PAYLOAD/log.txt;;
 	esac
 }
 
@@ -59,9 +59,9 @@ function watch() {
 	touch /tmp/button_wait
 	while [ -f /tmp/button_wait ]; do
 		CURRENT=$(SWITCH)
-		echo "$CURRENT" > $fs_PAYLOAD/log.txt
+		echo "$CURRENT" >> $fs_PAYLOAD/log.txt
 		if [ ! "$pos_CURRENT" = "$CURRENT" ]; then
-			echo "Position: $CURRENT" > $fs_PAYLOAD/log.txt
+			echo "Position: $CURRENT" >> $fs_PAYLOAD/log.txt
 			pos_OLD=$pos_CURRENT
 			pos_CURRENT=$CURRENT
 			if [ ! "$pos_CURRENT" = "$pos_OLD" ]; then
@@ -75,7 +75,7 @@ function watch() {
 					fi
 				fi
 			fi
-			echo "Index: $INDEX" > $fs_PAYLOAD/log.txt
+			echo "Index: $INDEX" >> $fs_PAYLOAD/log.txt
 			setLED $INDEX
 		fi
 	done
@@ -93,7 +93,7 @@ else
 	sleep 3
 	poweroff
 fi
-echo "$pos_CURRENT" > $fs_PAYLOAD/log.txt
-echo "$pos_DECREMENT" > $fs_PAYLOAD/log.txt
-echo "$pos_INCREMENT" > $fs_PAYLOAD/log.txt
+echo "$pos_CURRENT" >> $fs_PAYLOAD/log.txt
+echo "$pos_DECREMENT" >> $fs_PAYLOAD/log.txt
+echo "$pos_INCREMENT" >> $fs_PAYLOAD/log.txt
 watch
