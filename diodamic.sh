@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Error Symptoms (current):
-# Instantly starts flashing LED (as if payload was selected)
-# Check log.txt
-
 # Can only be used in switch2 or switch3
 # Choose a payload by changing the switch position relative
 # to the starting position. 
