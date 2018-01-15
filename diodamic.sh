@@ -18,6 +18,7 @@ LED_4=G
 LED_5=B
 LED_6=C
 LED_7=W
+LED_8=OFF
 
 pos_INITIAL=$(SWITCH)
 pos_CURRENT=$pos_CURRENT
@@ -35,6 +36,7 @@ function setLED() {
 		"5") LED $LED_5; led_CURRENT=$LED_5 ;;
 		"6") LED $LED_6; led_CURRENT=$LED_6 ;;
 		"7") LED $LED_7; led_CURRENT=$LED_7 ;;
+		"8" LED $LED_8; led_CURRENT=$LED_8 ;;
 		*) echo "Failure." >> $fs_PAYLOAD/log.txt;;
 	esac
 	echo "Changed to $1: $led_CURRENT" >> $fs_PAYLOAD/log.txt
@@ -44,13 +46,14 @@ function launch() {
 	echo "Launching payload $1" >> $fs_PAYLOAD/log.txt
 	LED $led_CURRENT 500
 	case "$1" in
-		"1") source "$fs_PAYLOAD/1\.sh" ;;
-		"2") source "$fs_PAYLOAD/2\.sh" ;;
-		"3") source "$fs_PAYLOAD/3\.sh" ;;
-		"4") source "$fs_PAYLOAD/4\.sh" ;;
-		"5") source "$fs_PAYLOAD/5\.sh" ;;
-		"6") source "$fs_PAYLOAD/6\.sh" ;;
-		"7") source "$fs_PAYLOAD/7\.sh" ;;
+		"1") source "$fs_PAYLOAD/Magenta-1/payload\.sh" ;;
+		"2") source "$fs_PAYLOAD/Red-2/payload\.sh" ;;
+		"3") source "$fs_PAYLOAD/Yellow-3/payload\.sh" ;;
+		"4") source "$fs_PAYLOAD/Green-4/payload\.sh" ;;
+		"5") source "$fs_PAYLOAD/Blue-5/payload\.sh" ;;
+		"6") source "$fs_PAYLOAD/Cyan-6/payload\.sh" ;;
+		"7") source "$fs_PAYLOAD/White-7/payload\.sh" ;;
+		"8") source "$fs_PAYLOAD/Off-8/payload\.sh" ;;
 		*) echo "Failure." >> $fs_PAYLOAD/log.txt;;
 	esac
 }
@@ -66,7 +69,7 @@ function watch() {
 			pos_CURRENT=$CURRENT
 			if [ ! "$pos_CURRENT" = "$pos_OLD" ]; then
 				if [ "$pos_CURRENT" = "$pos_INCREMENT" ]; then
-					if [ ! "$INDEX" = "6" ]; then
+					if [ ! "$INDEX" = "8" ]; then
 						INDEX=$((INDEX+1))
 					fi
 				elif [ "$pos_CURRENT" = "$pos_DECREMENT" ]; then
